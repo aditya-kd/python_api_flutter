@@ -42,31 +42,67 @@ class _MyHomePageState extends State<MyHomePage> {
   //   return output;
   // }
   String displayText = 'No Data';
+  String searchQuery = '';
+  final searchController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      searchQuery = searchController.text;
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Search'),
+      ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            TextField(
+              onSubmitted: (text) {
+                setState(() {
+                  searchQuery = text;
+                });
+                print('Submitted Query: $searchQuery');
+              },
+              enableSuggestions: true,
+              controller: searchController,
+              decoration: InputDecoration(
+                focusColor: Colors.black,
+                suffixIcon: Icon(Icons.search),
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(50))),
+                hintText: 'Search',
+              ),
+            ),
             Text(
               displayText,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.bodyText2
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var data=await fetchData('http://10.0.2.2:5000/api?query=this%20is%20a%20resting%20house');
+          var data =
+              await fetchData('http://10.0.2.2:5000/api?query=' + searchQuery);
           // var data =
-          //     await fetchData('https://jsonplaceholder.typicode.com/albums/1');
-          print('data revieved $data');
-          var parsed = jsonDecode(data);
+          //      await fetchData('https://jsonplaceholder.typicode.com/albums/1');
+          print('data recieved $data');
+          // var parsed = jsonDecode(data);
           setState(() {
-            displayText = parsed['result'];
-            print('Recieved Data: ${parsed['result']}');
+            displayText = ""+data;
           });
         },
         tooltip: 'Increment',
