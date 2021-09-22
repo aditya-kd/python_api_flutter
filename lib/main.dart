@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:python_app/request.dart';
 
@@ -86,10 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 hintText: 'Search',
               ),
             ),
-            Text(
-              displayText,
-              style: Theme.of(context).textTheme.bodyText2
-            ),
+            Text(displayText, style: Theme.of(context).textTheme.bodyText2),
           ],
         ),
       ),
@@ -102,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           print('data recieved $data');
           // var parsed = jsonDecode(data);
           setState(() {
-            displayText = ""+data;
+            displayText = "" + data;
           });
         },
         tooltip: 'Increment',
