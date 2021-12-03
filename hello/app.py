@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request
 import urllib.request, urllib.parse, urllib.error
 import json
 
@@ -27,9 +27,8 @@ def gaurdianAPI(query):
     response=urllib.request.urlopen(base_url)
     data = response.read().decode()
     json_res=json.loads(data)
-    print(str(json_res['response']['results'][0]))
-    return str(json_res['response']['results'][0])
-
+    print(str(json_res['response']['results']))
+    return str(json_res['response']['results'])
 
 if __name__ == '__main___':
     app.run()

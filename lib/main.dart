@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     searchController.dispose();
     super.dispose();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,18 +91,26 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var data =
-              await fetchData('http://10.0.2.2:5000/api?query=' + searchQuery);
+               await fetchData('http://10.0.2.2:5000/api?query=' + searchQuery);
+              //await fetchData('http://127.0.0.1:5000/api?query=' +searchQuery);
           // var data =
           //      await fetchData('https://jsonplaceholder.typicode.com/albums/1');
           print('data recieved $data');
           // var parsed = jsonDecode(data);
+          String printableData=makePrintableData(data);
           setState(() {
-            displayText = "" + data;
-          });
+            displayText = "" + printableData;
+          });  
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+String makePrintableData(data) {
+  //do the processing to remove unwanted JSON stuff
+  
+  return data;
 }
